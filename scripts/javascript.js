@@ -1,10 +1,4 @@
-const modal = {
-    open() {
-        document.querySelector('.modal-overlay')
-        .classList.add('active')
-    },
-    close() {
-        document.querySelector('.modal-overlay')
-        .classList.remove('active')
-    }
+function toggle() {
+    objModal = document.querySelector('.modal-overlay').classList
+    objModal.contains('active') ? objModal.remove('active') : objModal.add('active')
 }
