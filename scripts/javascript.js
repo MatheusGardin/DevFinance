@@ -2,42 +2,48 @@ function toggle() {
     document.querySelector('.modal-overlay').classList.toggle('active')
 }
 
-const transaction = [
+const transactions = [
     {
-        'id': 1,
-        'description': 'Luz',
-        'amount': -50000,
-        'date': '23/01/2021'
+        id: 1,
+        description: 'Luz',
+        amount: -50000,
+        date: '23/01/2021'
     },
     {
-        'id': 2,
-        'description': 'Website',
-        'amount': 500000,
-        'date': '23/01/2021'
+        id: 2,
+        description: 'Website',
+        amount: 500000,
+        date: '23/01/2021'
     }, 
     {
-        'id': 3,
-        'description': 'Internet',
-        'amount': -20000,
-        'date': '23/01/2021'
+        id: 3,
+        description: 'Internet',
+        amount: -20000,
+        date: '23/01/2021'
     },
     {
-        'id': 4,
-        'description': 'App',
-        'amount': '200000',
-        'date': '23/01/2021'
+        id: 4,
+        description: 'App',
+        amount: 200000,
+        date: '23/01/2021'
     }
 ]
 
 const Transaction = {
     incomes() {
-        //Somar as entradas
+        let income = 0;
+        transactions.forEach( transaction => {
+            if (transaction.amount > 0) {
+               income += transaction.amount 
+            }
+        })
+        return income
     },
     expenses() {
-        //Somar as saídas
+        return 'Expenses'
     },
     total() {
-        //Entradas - Saídas
+        return 'Total'
     }
 }
 
@@ -64,6 +70,17 @@ const DOM = {
         `
 
         return html
+    },
+    updateBalance() {
+        document
+            .getElementById('incomeDisplay')
+            .innerHTML = Transaction.incomes()
+        document
+            .getElementById('expenseDisplay')
+            .innerHTML = Transaction.expenses()
+        document
+            .getElementById('totalDisplay')
+            .innerHTML = Transaction.total()
     }
 }
 
@@ -84,6 +101,6 @@ const Utils = {
     }
 }
 
-transaction.forEach(function(transaction) {
-    DOM.addTransaction(transaction)
-})
+transactions.forEach( transaction => DOM.addTransaction(transaction) )
+
+DOM.updateBalance()
