@@ -4,25 +4,21 @@ function toggle() {
 
 const transactions = [
     {
-        id: 1,
         description: 'Luz',
         amount: -50001,
         date: '23/01/2021'
     },
     {
-        id: 2,
         description: 'Website',
         amount: 500000,
         date: '23/01/2021'
     }, 
     {
-        id: 3,
         description: 'Internet',
         amount: -20012,
         date: '23/01/2021'
     },
     {
-        id: 4,
         description: 'App',
         amount: 200000,
         date: '23/01/2021'
@@ -34,6 +30,11 @@ const Transaction = {
     add(transaction) {
         Transaction.all.push(transaction)
 
+        App.reload()
+    },
+    remove(index) {
+        Transaction.all.splice(index, 1)
+        
         App.reload()
     },
     incomes() {
@@ -130,9 +131,4 @@ const App = {
 
 App.init()
 
-Transaction.add({
-    id: 39,
-    description: 'Alo',
-    amount: 200000,
-    date: '23/01/2021'
-})
+Transaction.remove(0)
