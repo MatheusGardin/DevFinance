@@ -2,8 +2,8 @@ function toggle() {
     document.querySelector('.modal-overlay').classList.toggle('active')
 }
 
-const transactions = [
-    {
+const Transaction = {
+    all: [{
         description: 'Luz',
         amount: -50001,
         date: '23/01/2021'
@@ -22,11 +22,7 @@ const transactions = [
         description: 'App',
         amount: 200000,
         date: '23/01/2021'
-    }
-]
-
-const Transaction = {
-    all: transactions,
+    }],
     add(transaction) {
         Transaction.all.push(transaction)
 
@@ -117,6 +113,39 @@ const Utils = {
     }
 }
 
+const Form = {
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+    getValues() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value,
+        }
+    },
+    validateFields() {
+        const { description, amount, date } = Form.getValues()
+        
+        if (description.trim() === '' || 
+            amount.trim() === '' ||
+            date.trim() === '')
+            throw new Error('Por favor, preencha todos os campos')
+    },
+    formatData() {},
+    submit(event) {
+        event.preventDefault()
+
+        try {
+            Form.validateFields()
+        } catch (error) {
+            alert(error.message)
+        }
+
+        Form.formatData()
+    }
+}
+
 const App = {
     init() {
         Transaction.all.forEach( transaction => DOM.addTransaction(transaction) )
@@ -130,5 +159,3 @@ const App = {
 }
 
 App.init()
-
-Transaction.remove(0)
