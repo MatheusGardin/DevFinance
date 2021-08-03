@@ -6,7 +6,7 @@ const transactions = [
     {
         id: 1,
         description: 'Luz',
-        amount: -50000,
+        amount: -50001,
         date: '23/01/2021'
     },
     {
@@ -18,7 +18,7 @@ const transactions = [
     {
         id: 3,
         description: 'Internet',
-        amount: -20000,
+        amount: -20012,
         date: '23/01/2021'
     },
     {
@@ -40,7 +40,13 @@ const Transaction = {
         return income
     },
     expenses() {
-        return 'Expenses'
+        let expenses = 0;
+        transactions.forEach( transaction => {
+            if (transaction.amount < 0) {
+               expenses += transaction.amount 
+            }
+        })
+        return expenses
     },
     total() {
         return 'Total'
