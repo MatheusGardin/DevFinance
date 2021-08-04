@@ -2,27 +2,19 @@ function toggle() {
     document.querySelector('.modal-overlay').classList.toggle('active')
 }
 
+const Storage = {
+    get() {
+        return JSON.parse(localStorage.getItem('dev.finances:transactions')) ||
+        []
+    },
+    set(transactions) {
+        localStorage.setItem('dev.finances:transactions', 
+            JSON.stringFy(transactions))
+    }
+}
+
 const Transaction = {
-    all: [{
-        description: 'Luz',
-        amount: -50001,
-        date: '23/01/2021'
-    },
-    {
-        description: 'Website',
-        amount: 500000,
-        date: '23/01/2021'
-    }, 
-    {
-        description: 'Internet',
-        amount: -20012,
-        date: '23/01/2021'
-    },
-    {
-        description: 'App',
-        amount: 200000,
-        date: '23/01/2021'
-    }],
+    all: Storage.get(),
     add(transaction) {
         Transaction.all.push(transaction)
 
