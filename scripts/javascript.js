@@ -36,18 +36,16 @@ const Transaction = {
     incomes() {
         let income = 0;
         Transaction.all.forEach( transaction => {
-            if (transaction.amount > 0) {
-               income += transaction.amount 
-            }
+            if (transaction.amount > 0) 
+                return income += transaction.amount 
         })
         return income
     },
     expenses() {
         let expenses = 0;
         Transaction.all.forEach( transaction => {
-            if (transaction.amount < 0) {
-               expenses += transaction.amount 
-            }
+            if (transaction.amount < 0) 
+                return expenses += transaction.amount 
         })
         return expenses
     },
@@ -97,6 +95,15 @@ const DOM = {
 }
 
 const Utils = {
+    formatAmount(amount) {
+        amount = Number(amount) * 100
+
+        return amount
+    },
+    formatDate(date) {
+        const splittedDate = date.split('-')
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
+    },
     formatCurrency(value) {
         const signal = Number(value) < 0 ? '-' : ''
 
@@ -132,17 +139,31 @@ const Form = {
             date.trim() === '')
             throw new Error('Por favor, preencha todos os campos')
     },
-    formatData() {},
+    formatValues() {
+        let { description, amount, date } = Form.getValues()
+
+        amount = Utils.formatAmount(amount)
+        date = Utils.formatDate(date)
+
+        return { description, amount, date }
+    },
+    clearFields() {
+        Form.description.value = ''
+        Form.amount.value = ''
+        Form.date.value = ''
+    },
     submit(event) {
         event.preventDefault()
 
         try {
             Form.validateFields()
+            const transaction = Form.formatValues()
+            Transaction.add(transaction)
+            Form.clearFields()
+            toggle()
         } catch (error) {
             alert(error.message)
         }
-
-        Form.formatData()
     }
 }
 
