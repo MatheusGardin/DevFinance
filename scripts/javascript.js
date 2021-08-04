@@ -4,8 +4,8 @@ function toggle() {
 
 const Storage = {
     get() {
-        return JSON.parse(localStorage.getItem('dev.finances:transactions')) ||
-        []
+        return JSON.parse(
+            localStorage.getItem('dev.finances:transactions')) || []
     },
     set(transactions) {
         localStorage.setItem('dev.finances:transactions', 
@@ -89,9 +89,8 @@ const DOM = {
 
 const Utils = {
     formatAmount(amount) {
-        amount = Number(amount) * 100
-
-        return amount
+        amount = amount * 100
+        return Math.round(amount)
     },
     formatDate(date) {
         const splittedDate = date.split('-')
@@ -150,9 +149,13 @@ const Form = {
 
         try {
             Form.validateFields()
+
             const transaction = Form.formatValues()
+
             Transaction.add(transaction)
+
             Form.clearFields()
+            
             toggle()
         } catch (error) {
             alert(error.message)
